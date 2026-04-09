@@ -6,7 +6,7 @@ console.log(stringifiedObj);
 let parsedObj = JSON.parse(stringifiedObj);
 console.log(parsedObj.name);
 
-let data = fetch("ex1/data.json")
+let data = fetch("data.json")
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
