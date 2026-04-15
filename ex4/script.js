@@ -3,8 +3,9 @@ async function getData() {
   const result = await response.json();
   let posts = result.slice(0, 5);
   
-  let postList = document.querySelector("#post-list");
-
+  let postList = document.createElement("div");
+  postList.id = "post-list";
+  document.body.appendChild(postList);
   posts.forEach((post) => {
     let postsContainer = document.createElement("div");
     postsContainer.innerHTML = `
