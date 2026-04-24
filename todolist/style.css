@@ -21,9 +21,11 @@ main{
     flex-direction: column;
 }
 
+
 #tasks-container p{
     text-align: center;
 }
+
 
 #tasks-container{
     background-color: #e2e2e2;
