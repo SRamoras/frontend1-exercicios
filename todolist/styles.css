@@ -267,19 +267,6 @@ h1 {
 .edit-button .material-symbols-outlined,
 .delete-button .material-symbols-outlined { font-size: 17px; }
 
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  font-weight: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  direction: ltr;
-  font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-}
 
 .colored-toast.swal2-icon-success  { background-color: #a5dc86 !important; }
 .colored-toast.swal2-icon-error    { background-color: #f27474 !important; }
