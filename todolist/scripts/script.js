@@ -34,6 +34,20 @@ function createTask(task) {
   return taskObj;
 }
 
+
+function updateStats() {
+  const tasks = getLocalStorage("tasks") || [];
+  const total = tasks.length;
+  const done = tasks.filter(t => t.done).length;
+  const pending = total - done;
+  document.querySelector("#stat-total").textContent = total;
+  document.querySelector("#stat-done").textContent = done;
+  document.querySelector("#stat-pending").textContent = pending;
+}
+
+
+
+
 let form = document.querySelector("#add-list");
 
 form.addEventListener("submit", (e) => {
@@ -61,32 +75,37 @@ function getTasksDisplayed() {
   let tasksArray = getLocalStorage("tasks") || [];
 
   if (tasksArray.length === 0) {
-    tasksContainer.innerHTML = `<p>No tasks...</p>`;
+    tasksContainer.innerHTML = `<p class="no-tasks">No tasks...</p>`;
+    updateStats();
     return;
   }
 
   tasksArray.forEach((task) => {
     const taskCard = document.createElement("div");
     taskCard.classList.add("task-content");
+    if (task.done) taskCard.classList.add("task-done");
 
     taskCard.innerHTML = `
-      <p class="text" data-id="${task.id}">${task.task}</p>
-      <div>
-        <button data-id="${task.id}" class="done-button">
-          <span class="material-symbols-outlined">done_all</span>
-        </button>
+    <p class="text" data-id="${task.id}">${task.task}</p>
+    <div class="task-actions">
+      
+      <button data-id="${task.id}" class="done-button">
+        <span class="material-symbols-outlined">done_all</span>
+      </button>
+      
+      <button data-id="${task.id}" class="edit-button">
+        <span class="material-symbols-outlined">edit</span>
+      </button>
+      
+      <button data-id="${task.id}" class="delete-button">
+        <span class="material-symbols-outlined">delete</span>
+      </button>
 
-        <button data-id="${task.id}" class="edit-button">
-          <span class="material-symbols-outlined">edit</span>
-        </button>
-
-        <button data-id="${task.id}" class="delete-button">
-          <span class="material-symbols-outlined">delete</span>
-        </button>
-      </div>
-    `;
+    </div>
+  `;
     tasksContainer.appendChild(taskCard);
   });
+  updateStats();
 }
 
 getTasksDisplayed();
@@ -162,6 +181,7 @@ tasksContainer.addEventListener("click", (e) => {
   if (doneBtn) {
     const taskIdToDone = doneBtn.dataset.id;
     const taskCard = doneBtn.closest(".task-content");
+    
     const p = taskCard.querySelector(".text");
 
 
@@ -175,7 +195,7 @@ tasksContainer.addEventListener("click", (e) => {
       });
 
       setLocalStorage("tasks", tasks);
-         Toast.fire({
+        Toast.fire({
           icon: 'success',
           title: 'Task Done',
         })
