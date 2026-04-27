@@ -203,6 +203,3 @@ tasksContainer.addEventListener("click", (e) => {
 
   }
 });
-
-
-
