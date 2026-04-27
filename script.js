@@ -115,22 +115,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   tasksContainer.addEventListener("click", (e) => {
     const deleteBtn = e.target.closest(".delete-button");
+
     if (deleteBtn) {
-      let allTasks = getLocalStorage("tasks") || [];
       const taskIdToDelete = deleteBtn.dataset.id;
 
-      const updatedTasks = allTasks.filter(task => task.id !== taskIdToDelete);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let allTasks = getLocalStorage("tasks") || [];
 
-      setLocalStorage("tasks", updatedTasks);
-      Toast.fire({
-    icon: 'error',
-    title: 'Task Deleted',
-  })
-      getTasksDisplayed();
+          const updatedTasks = allTasks.filter(
+            task => task.id !== taskIdToDelete
+          );
+
+          setLocalStorage("tasks", updatedTasks);
+
+          getTasksDisplayed();
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your task has been deleted.",
+            icon: "success"
+          });
+        }
+      });
     }
   });
 });
-
 
 
 let tasksContainer = document.querySelector("#tasks-container");
@@ -175,38 +193,31 @@ tasksContainer.addEventListener("click", (e) => {
 });
 
 
+
+
 tasksContainer.addEventListener("click", (e) => {
   const doneBtn = e.target.closest(".done-button");
 
   if (doneBtn) {
     const taskIdToDone = doneBtn.dataset.id;
-    const taskCard = doneBtn.closest(".task-content");
 
     let tasks = getLocalStorage("tasks") || [];
-    let updatedTask = null;
+    let updatedTask;
 
     tasks = tasks.map(task => {
       if (task.id == taskIdToDone) {
-        const newTask = { ...task, done: !task.done };
-        updatedTask = newTask;
-        return newTask;
+        updatedTask = { ...task, done: !task.done };
+        return updatedTask;
       }
       return task;
     });
 
     setLocalStorage("tasks", tasks);
 
-    if (updatedTask?.done) {
-      Toast.fire({
-        icon: 'success',
-        title: 'Task Done',
-      });
-    } else {
-      Toast.fire({
-        icon: 'warning',
-        title: 'Task Marked as Undone',
-      });
-    }
+    Toast.fire({
+      icon: updatedTask.done ? 'success' : 'warning',
+      title: updatedTask.done ? 'Task Done' : 'Task Undone',
+    });
 
     getTasksDisplayed();
   }
