@@ -181,25 +181,33 @@ tasksContainer.addEventListener("click", (e) => {
   if (doneBtn) {
     const taskIdToDone = doneBtn.dataset.id;
     const taskCard = doneBtn.closest(".task-content");
-    
-    const p = taskCard.querySelector(".text");
 
+    let tasks = getLocalStorage("tasks") || [];
+    let updatedTask = null;
 
-      let tasks = getLocalStorage("tasks") || [];
+    tasks = tasks.map(task => {
+      if (task.id == taskIdToDone) {
+        const newTask = { ...task, done: !task.done };
+        updatedTask = newTask;
+        return newTask;
+      }
+      return task;
+    });
 
-      tasks = tasks.map(task => {
-        if (task.id == taskIdToDone) {
-          return { ...task, done: !task.done };
-        }
-        return task;
+    setLocalStorage("tasks", tasks);
+
+    if (updatedTask?.done) {
+      Toast.fire({
+        icon: 'success',
+        title: 'Task Done',
       });
+    } else {
+      Toast.fire({
+        icon: 'warning',
+        title: 'Task Marked as Undone',
+      });
+    }
 
-      setLocalStorage("tasks", tasks);
-        Toast.fire({
-          icon: 'success',
-          title: 'Task Done',
-        })
-      getTasksDisplayed();
-
+    getTasksDisplayed();
   }
 });
