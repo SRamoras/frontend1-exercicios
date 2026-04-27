@@ -12,7 +12,16 @@ body {
   min-height: 100vh;
   padding: 2rem 1rem 4rem;
 }
-
+.task-actions{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+.date {
+  font-size: 0.7rem;
+  color: #727272;
+}
 .bg-grid {
   position: fixed;
   inset: 0;
@@ -27,7 +36,7 @@ body {
 
 main {
   position: relative;
-  z-index: 1;
+  z-index: 1;   
   max-width: 620px;
   margin: 0 auto;
   display: flex;
@@ -275,6 +284,30 @@ h1 {
 .colored-toast .swal2-title,
 .colored-toast .swal2-close,
 .colored-toast .swal2-html-container { color: white; }
+
+
+.swal2-popup {
+  border-radius: 20px !important;
+  font-family: Arial, sans-serif;
+}
+
+.swal2-title {
+  color: #222;
+  font-size: 22px;
+}
+
+.swal2-confirm {
+  background-color: #28a745 !important;
+  border-radius: 8px !important;
+}
+
+.swal2-cancel {
+  background-color: #dc3545 !important;
+  border-radius: 8px !important;
+}
+
+
+
 
 @media (max-width: 480px) {
   h1 { font-size: 1.7rem; }

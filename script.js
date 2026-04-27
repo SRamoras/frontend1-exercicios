@@ -88,7 +88,7 @@ function getTasksDisplayed() {
     taskCard.innerHTML = `
     <p class="text" data-id="${task.id}">${task.task}</p>
     <div class="task-actions">
-      
+      <div>
       <button data-id="${task.id}" class="done-button">
         <span class="material-symbols-outlined">done_all</span>
       </button>
@@ -100,13 +100,23 @@ function getTasksDisplayed() {
       <button data-id="${task.id}" class="delete-button">
         <span class="material-symbols-outlined">delete</span>
       </button>
-
+      </div>
+      <div class="date">
+        ${new Date(task.date).toLocaleString("pt-PT", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </div>
     </div>
   `;
     tasksContainer.appendChild(taskCard);
   });
   updateStats();
 }
+
 
 getTasksDisplayed();
 
